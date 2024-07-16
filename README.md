@@ -1,7 +1,7 @@
-<!Doctype html>
+<!doctype html>
 <html>
   <head>
-    <title>Soy Md. N e H Jack</title>
+    <title> Soy Md. N e H Jack </title>
     <meta name="google-site-verification" content="VQxsUPaj3l7YJoZPqKY7E46izYE3CJ8CC16M2rRIuXo" />
   </head>
   <body>
