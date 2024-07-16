@@ -1,4 +1,4 @@
-<!doctype html>
+<!Doctype html>
 <html>
   <head>
     <title>Soy Md. N e H Jack</title>
