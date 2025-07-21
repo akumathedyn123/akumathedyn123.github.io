@@ -181,7 +181,7 @@
                 const response = await fetch(APP_SCRIPT_URL, {
                     method: 'POST',
                     headers: {
-                        // Crucial CORS fix: send as text/plain [1, 2]
+                        // Crucial CORS fix: send as text/plain [1]
                         'Content-Type': 'text/plain;charset=utf-8',
                     },
                     body: JSON.stringify(data),
@@ -251,7 +251,7 @@
                     headers.forEach(header => {
                         const cell = document.createElement('td');
                         // Use the header text directly as the key
-                        cell.textContent = row[header] |
+                        cell.textContent = rowData[header] |
 
 | '';
                         row.appendChild(cell);
@@ -276,7 +276,7 @@
         }
 
         function loadBloodDonorsData() {
-            // Corrected: Pass the array of headers for the table
+            // This one was already correct
             loadTableData('Blood_Donors', 'bloodDonorsTable', ['Name', 'Group', 'Contact Phone']);
         }
 
