@@ -1,11 +1,96 @@
-<!doctype html>
-<html>
-  <head>
-    <title> Soy Md. N e H Jack </title>
-    <meta name="google-site-verification" content="VQxsUPaj3l7YJoZPqKY7E46izYE3CJ8CC16M2rRIuXo" />
-    <meta name="google-site-verification" content="VQxsUPaj3l7YJoZPqKY7E46izYE3CJ8CC16M2rRIuXo" />
-  </head>
-  <body>
-    <p>This is an example paragraph. Anything in the <strong>body</strong> tag will appear on the page, just like this <strong>p</strong> tag and its contents.</p>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Response App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Emergency Response App</h1>
+
+        <div class="form-section">
+            <h2>Submit Missing Child Details (Parents)</h2>
+            <form id="parentForm">
+                <label for="parentStudentName">Student's Name:</label>
+                <input type="text" id="parentStudentName" name="studentName" required>
+
+                <label for="parentClass">Class:</label>
+                <input type="text" id="parentClass" name="studentClass" required>
+
+                <label for="parentPhone">Parent's Phone:</label>
+                <input type="tel" id="parentPhone" name="contactPhone" required>
+
+                <input type="hidden" id="parentIpAddress" name="ipAddress">
+                <button type="submit">Submit</button>
+                <p id="parentMessage" class="message"></p>
+            </form>
+        </div>
+
+        <div class="form-section">
+            <h2>Submit Found Child Details (Finders)</h2>
+            <form id="finderForm">
+                <label for="finderStudentName">Student's Name:</label>
+                <input type="text" id="finderStudentName" name="studentName" required>
+
+                <label for="finderClass">Class:</label>
+                <input type="text" id="finderClass" name="studentClass" required>
+
+                <label for="finderContactPhone">Contact Phone (of finder):</label>
+                <input type="tel" id="finderContactPhone" name="contactPhone" required>
+
+                <input type="hidden" id="finderIpAddress" name="ipAddress">
+                <button type="submit">Submit</button>
+                <p id="finderMessage" class="message"></p>
+            </form>
+        </div>
+
+        <div class="form-section">
+            <h2>Submit Blood Donor Details</h2>
+            <form id="donorForm">
+                <label for="donorName">Name:</label>
+                <input type="text" id="donorName" name="donorName" required>
+
+                <label for="donorGroup">Blood Group:</label>
+                <select id="donorGroup" name="bloodGroup" required>
+                    <option value="">Select Group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+
+                <label for="donorPhone">Phone:</label>
+                <input type="tel" id="donorPhone" name="donorPhone" required>
+
+                <input type="hidden" id="donorIpAddress" name="ipAddress">
+                <button type="submit">Submit</button>
+                <p id="donorMessage" class="message"></p>
+            </form>
+        </div>
+
+        <hr>
+
+        <div class="data-display">
+            <h2>Submitted by Parents/Founders</h2>
+            <div id="parentsFoundersTableContainer">
+                <p>Loading data...</p>
+            </div>
+        </div>
+
+        <div class="data-display">
+            <h2>Blood Donors Available</h2>
+            <div id="bloodDonorsTableContainer">
+                <p>Loading data...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>
