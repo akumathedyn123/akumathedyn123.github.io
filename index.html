@@ -6,7 +6,7 @@
     <title>Milestone Emergency App</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
-       .container { max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+      .container { max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         h1, h2, h3 { color: #0056b3; }
         form { margin-bottom: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9; }
         form label { display: block; margin-bottom: 5px; font-weight: bold; }
@@ -29,14 +29,14 @@
             font-size: 16px;
         }
         form button:hover { background-color: #0056b3; }
-       .message { margin-top: 10px; padding: 10px; border-radius: 4px; }
-       .message.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-       .message.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+      .message { margin-top: 10px; padding: 10px; border-radius: 4px; }
+      .message.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+      .message.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         table, th, td { border: 1px solid #ddd; }
         th, td { padding: 10px; text-align: left; }
         th { background-color: #e9ecef; }
-       .refresh-button {
+      .refresh-button {
             background-color: #6c757d;
             color: white;
             padding: 8px 12px;
@@ -46,7 +46,7 @@
             font-size: 14px;
             margin-top: 10px;
         }
-       .refresh-button:hover { background-color: #5a6268; }
+      .refresh-button:hover { background-color: #5a6268; }
     </style>
 </head>
 <body>
@@ -181,13 +181,13 @@
                 const response = await fetch(APP_SCRIPT_URL, {
                     method: 'POST',
                     headers: {
-                        // Crucial CORS fix: send as text/plain
+                        // Crucial CORS fix: send as text/plain [1, 2]
                         'Content-Type': 'text/plain;charset=utf-8',
                     },
                     body: JSON.stringify(data),
                 });
 
-                const result = await response.json();
+                const result = await response.json(); [3, 4, 5, 6, 7]
                 if (result.status === 'success') {
                     showMessage(messageId, result.message, 'success');
                     form.reset(); // Clear the form
@@ -226,13 +226,13 @@
             tableBody.innerHTML = '<tr><td colspan="' + headers.length + '">Loading data...</td></tr>'; // Loading indicator
 
             try {
-                const response = await fetch(`${APP_SCRIPT_URL}?sheet=${sheetName}`, {
+                const response = await fetch(`${APP_SCRIPT_URL}?sheet=${sheetName}`, { [3, 6, 7]
                     method: 'GET',
                     headers: {
                         'Content-Type': 'text/plain;charset=utf-8', // Though GET, keeping consistent
                     }
                 });
-                const data = await response.json();
+                const data = await response.json(); [3, 6, 7]
 
                 tableBody.innerHTML = ''; // Clear existing data
 
@@ -266,14 +266,17 @@
 
         // Specific functions to load each table
         function loadParentsData() {
+            // Corrected: Pass the array of headers for the table
             loadTableData('Parents_Submissions', 'parentsTable',);
         }
 
         function loadFoundChildrenData() {
+            // Corrected: Pass the array of headers for the table
             loadTableData('Found_Children_Reports', 'foundChildrenTable',);
         }
 
         function loadBloodDonorsData() {
+            // Corrected: Pass the array of headers for the table
             loadTableData('Blood_Donors', 'bloodDonorsTable', ['Name', 'Group', 'Contact Phone']);
         }
 
