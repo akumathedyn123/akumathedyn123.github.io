@@ -1,5 +1,4 @@
-// IMPORTANT: Replace this with your deployed Google Apps Script Web App URL
-const APPS_SCRIPT_WEB_APP_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL'; 
+const APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxzeAF9bBrYxlPYG25r3j50tPUBq9gBYGlKbfi44fb5QVFyukKPoPiN6RBdNrC1vW3X/exec'; 
 
 // Function to get public IP address [11]
 async function getPublicIp() {
