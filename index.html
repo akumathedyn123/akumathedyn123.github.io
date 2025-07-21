@@ -4,93 +4,414 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emergency Response App</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Tailwind CSS CDN for quick styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        .form-section {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 1px solid #e2e8f0;
+        }
+        .table-container {
+            margin-top: 2rem;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        th, td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background-color: #4f46e5;
+            color: #fff;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        tr:nth-child(even) {
+            background-color: #f8faff;
+        }
+        tr:hover {
+            background-color: #f0f4ff;
+        }
+        .button-primary {
+            background-color: #4f46e5;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .button-primary:hover {
+            background-color: #4338ca;
+        }
+        .message-box {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+        .message-success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #34d399;
+        }
+        .message-error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #4f46e5;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 0.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
-<body>
+<body class="p-4">
     <div class="container">
-        <h1>Emergency Response App</h1>
+        <h1 class="text-4xl font-bold text-center mb-8 text-indigo-700">Emergency Response Application</h1>
+        <p class="text-center text-lg mb-8 text-gray-600">
+            In this critical time, this app helps parents find their children, allows those who found children to report, and connects blood donors with those in need.
+            All data submitted is stored securely.
+        </p>
 
+        <!-- Parent Submission Form -->
         <div class="form-section">
-            <h2>Submit Missing Child Details (Parents)</h2>
-            <form id="parentForm">
-                <label for="parentStudentName">Student's Name:</label>
-                <input type="text" id="parentStudentName" name="studentName" required>
-
-                <label for="parentClass">Class:</label>
-                <input type="text" id="parentClass" name="studentClass" required>
-
-                <label for="parentPhone">Parent's Phone:</label>
-                <input type="tel" id="parentPhone" name="contactPhone" required>
-
-                <input type="hidden" id="parentIpAddress" name="ipAddress">
-                <button type="submit">Submit</button>
-                <p id="parentMessage" class="message"></p>
+            <h2 class="text-2xl font-semibold mb-4 text-indigo-600">Report Missing Child (Parents)</h2>
+            <form id="parentForm" class="space-y-4">
+                <div>
+                    <label for="parentStudentName" class="block text-sm font-medium text-gray-700">Student's Name:</label>
+                    <input type="text" id="parentStudentName" name="studentName" required
+                           class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="parentClass" class="block text-sm font-medium text-gray-700">Class:</label>
+                    <input type="text" id="parentClass" name="studentClass" required
+                           class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="parentPhone" class="block text-sm font-medium text-gray-700">Parent's Phone:</label>
+                    <input type="tel" id="parentPhone" name="contactPhone" required
+                           class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <button type="submit" class="button-primary">Submit Missing Child Report</button>
+                <div id="parentMessage" class="message-box hidden"></div>
             </form>
         </div>
 
+        <!-- Finder Submission Form -->
         <div class="form-section">
-            <h2>Submit Found Child Details (Finders)</h2>
-            <form id="finderForm">
-                <label for="finderStudentName">Student's Name:</label>
-                <input type="text" id="finderStudentName" name="studentName" required>
-
-                <label for="finderClass">Class:</label>
-                <input type="text" id="finderClass" name="studentClass" required>
-
-                <label for="finderContactPhone">Contact Phone (of finder):</label>
-                <input type="tel" id="finderContactPhone" name="contactPhone" required>
-
-                <input type="hidden" id="finderIpAddress" name="ipAddress">
-                <button type="submit">Submit</button>
-                <p id="finderMessage" class="message"></p>
+            <h2 class="text-2xl font-semibold mb-4 text-indigo-600">Report Found Child (Finders)</h2>
+            <form id="finderForm" class="space-y-4">
+                <div>
+                    <label for="finderStudentName" class="block text-sm font-medium text-gray-700">Student's Name:</label>
+                    <input type="text" id="finderStudentName" name="studentName" required
+                           class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="finderClass" class="block text-sm font-medium text-gray-700">Class:</label>
+                    <input type="text" id="finderClass" name="studentClass" required
+                           class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="finderContactPhone" class="block text-sm font-medium text-gray-700">Your Contact Phone:</label>
+                    <input type="tel" id="finderContactPhone" name="contactPhone" required
+                           class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <button type="submit" class="button-primary">Submit Found Child Report</button>
+                <div id="finderMessage" class="message-box hidden"></div>
             </form>
         </div>
 
+        <!-- Blood Donor Submission Form -->
         <div class="form-section">
-            <h2>Submit Blood Donor Details</h2>
-            <form id="donorForm">
-                <label for="donorName">Name:</label>
-                <input type="text" id="donorName" name="donorName" required>
-
-                <label for="donorGroup">Blood Group:</label>
-                <select id="donorGroup" name="bloodGroup" required>
-                    <option value="">Select Group</option>
-                    <option value="A+">A+</option>
-                    <option value="A-">A-</option>
-                    <option value="B+">B+</option>
-                    <option value="B-">B-</option>
-                    <option value="AB+">AB+</option>
-                    <option value="AB-">AB-</option>
-                    <option value="O+">O+</option>
-                    <option value="O-">O-</option>
-                </select>
-
-                <label for="donorPhone">Phone:</label>
-                <input type="tel" id="donorPhone" name="donorPhone" required>
-
-                <input type="hidden" id="donorIpAddress" name="ipAddress">
-                <button type="submit">Submit</button>
-                <p id="donorMessage" class="message"></p>
+            <h2 class="text-2xl font-semibold mb-4 text-indigo-600">Register as Blood Donor</h2>
+            <form id="donorForm" class="space-y-4">
+                <div>
+                    <label for="donorName" class="block text-sm font-medium text-gray-700">Your Name:</label>
+                    <input type="text" id="donorName" name="donorName" required
+                           class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="bloodGroup" class="block text-sm font-medium text-gray-700">Blood Group:</label>
+                    <select id="bloodGroup" name="bloodGroup" required
+                            class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">Select Group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="donorPhone" class="block text-sm font-medium text-gray-700">Your Phone:</label>
+                    <input type="tel" id="donorPhone" name="donorPhone" required
+                           class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <button type="submit" class="button-primary">Register as Donor</button>
+                <div id="donorMessage" class="message-box hidden"></div>
             </form>
         </div>
 
-        <hr>
+        <hr class="my-8 border-gray-300">
 
-        <div class="data-display">
-            <h2>Submitted by Parents/Founders</h2>
-            <div id="parentsFoundersTableContainer">
-                <p>Loading data...</p>
-            </div>
+        <!-- Display Sections -->
+        <h2 class="text-3xl font-bold text-center mb-6 text-indigo-700">Current Information</h2>
+        <button id="refreshDataBtn" class="button-primary block mx-auto mb-6">Refresh Data</button>
+        <div id="loadingData" class="text-center text-gray-500 hidden">
+            <span class="loading-spinner"></span> Loading data...
         </div>
 
-        <div class="data-display">
-            <h2>Blood Donors Available</h2>
-            <div id="bloodDonorsTableContainer">
-                <p>Loading data...</p>
-            </div>
+        <!-- Submitted by Parents Table -->
+        <div class="table-container">
+            <h3 class="text-xl font-semibold mb-3 text-gray-800">Submitted by Parents</h3>
+            <table id="parentsTable">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Class</th>
+                        <th>Parents Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be loaded here by JavaScript -->
+                </tbody>
+            </table>
+            <p id="noParentsData" class="text-gray-500 text-center mt-4 hidden">No parent submissions yet.</p>
+        </div>
+
+        <!-- Found Children Table -->
+        <div class="table-container">
+            <h3 class="text-xl font-semibold mb-3 text-gray-800">Check if you find your child here (Found Children)</h3>
+            <table id="foundChildrenTable">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Class</th>
+                        <th>Contact Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be loaded here by JavaScript -->
+                </tbody>
+            </table>
+            <p id="noFoundChildrenData" class="text-gray-500 text-center mt-4 hidden">No found children reports yet.</p>
+        </div>
+
+        <!-- Blood Donors Table -->
+        <div class="table-container">
+            <h3 class="text-xl font-semibold mb-3 text-gray-800">Available Blood Donors</h3>
+            <table id="donorsTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Group</th>
+                        <th>Contact Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be loaded here by JavaScript -->
+                </tbody>
+            </table>
+            <p id="noDonorsData" class="text-gray-500 text-center mt-4 hidden">No blood donors registered yet.</p>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // IMPORTANT: Replace with your deployed Google Apps Script Web App URL
+        const WEB_APP_URL = 'YOUR_WEB_APP_URL'; // e.g., 'https://script.google.com/macros/s/AKfycbz.../exec'
+
+        // Function to display messages (success/error)
+        function showMessage(elementId, message, type) {
+            const messageBox = document.getElementById(elementId);
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden', 'message-success', 'message-error');
+            if (type === 'success') {
+                messageBox.classList.add('message-success');
+            } else {
+                messageBox.classList.add('message-error');
+            }
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 5000); // Hide after 5 seconds
+        }
+
+        // Function to fetch IP address
+        async function getIpAddress() {
+            try {
+                const response = await fetch('https://api.ipify.org/?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error('Error fetching IP address:', error);
+                return 'Unknown'; // Fallback if IP cannot be fetched
+            }
+        }
+
+        // Generic function to handle form submissions
+        async function handleSubmit(event, formType, messageElementId) {
+            event.preventDefault(); // Prevent default form submission
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            // Show loading indicator
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'Submitting... <span class="loading-spinner"></span>';
+
+            const ipAddress = await getIpAddress();
+            data.ipAddress = ipAddress;
+            data.formType = formType; // Add form type to the data
+
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // Crucial for Apps Script to parse e.postData.contents
+                    },
+                    body: JSON.stringify(data), // Send data as JSON
+                });
+
+                const result = await response.json();
+                if (result.status === 'success') {
+                    showMessage(messageElementId, result.message, 'success');
+                    form.reset(); // Clear the form
+                    fetchAndDisplayData(); // Refresh displayed data
+                } else {
+                    showMessage(messageElementId, result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                showMessage(messageElementId, 'An error occurred during submission. Please try again.', 'error');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = (formType === 'parent') ? 'Submit Missing Child Report' :
+                                         (formType === 'finder') ? 'Submit Found Child Report' :
+                                         'Register as Donor';
+            }
+        }
+
+        // Attach event listeners to forms
+        document.getElementById('parentForm').addEventListener('submit', (e) => handleSubmit(e, 'parent', 'parentMessage'));
+        document.getElementById('finderForm').addEventListener('submit', (e) => handleSubmit(e, 'finder', 'finderMessage'));
+        document.getElementById('donorForm').addEventListener('submit', (e) => handleSubmit(e, 'donor', 'donorMessage'));
+        document.getElementById('refreshDataBtn').addEventListener('click', fetchAndDisplayData);
+
+
+        // Function to fetch and display data from Apps Script
+        async function fetchAndDisplayData() {
+            const loadingDiv = document.getElementById('loadingData');
+            loadingDiv.classList.remove('hidden'); // Show loading spinner
+
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'GET', // Use GET for data retrieval
+                });
+                const data = await response.json();
+
+                // Display Parents/Missing Children Data
+                const parentsTableBody = document.querySelector('#parentsTable tbody');
+                parentsTableBody.innerHTML = ''; // Clear previous data
+                if (data.parentsFounders && data.parentsFounders.length > 0) {
+                    document.getElementById('noParentsData').classList.add('hidden');
+                    data.parentsFounders.forEach(item => {
+                        if (item.parentsPhone) { // Only display if parentsPhone is available (implies parent submission)
+                            const row = parentsTableBody.insertRow();
+                            row.insertCell().textContent = item.studentName;
+                            row.insertCell().textContent = item.studentClass;
+                            row.insertCell().textContent = item.parentsPhone;
+                        }
+                    });
+                } else {
+                    document.getElementById('noParentsData').classList.remove('hidden');
+                }
+
+                // Display Found Children Data (re-using parentsFounders data, filtering for contactPhone)
+                const foundChildrenTableBody = document.querySelector('#foundChildrenTable tbody');
+                foundChildrenTableBody.innerHTML = ''; // Clear previous data
+                if (data.parentsFounders && data.parentsFounders.length > 0) {
+                    const foundChildren = data.parentsFounders.filter(item => item.contactPhone && !item.parentsPhone); // Filter for finder submissions
+                    if (foundChildren.length > 0) {
+                        document.getElementById('noFoundChildrenData').classList.add('hidden');
+                        foundChildren.forEach(item => {
+                            const row = foundChildrenTableBody.insertRow();
+                            row.insertCell().textContent = item.studentName;
+                            row.insertCell().textContent = item.studentClass;
+                            row.insertCell().textContent = item.contactPhone;
+                        });
+                    } else {
+                        document.getElementById('noFoundChildrenData').classList.remove('hidden');
+                    }
+                } else {
+                    document.getElementById('noFoundChildrenData').classList.remove('hidden');
+                }
+
+
+                // Display Blood Donors Data
+                const donorsTableBody = document.querySelector('#donorsTable tbody');
+                donorsTableBody.innerHTML = ''; // Clear previous data
+                if (data.bloodDonors && data.bloodDonors.length > 0) {
+                    document.getElementById('noDonorsData').classList.add('hidden');
+                    data.bloodDonors.forEach(item => {
+                        const row = donorsTableBody.insertRow();
+                        row.insertCell().textContent = item.name;
+                        row.insertCell().textContent = item.group;
+                        row.insertCell().textContent = item.contactPhone;
+                    });
+                } else {
+                    document.getElementById('noDonorsData').classList.remove('hidden');
+                }
+
+            } catch (error) {
+                console.error('Error fetching data for display:', error);
+                // Optionally show an error message on the UI
+            } finally {
+                loadingDiv.classList.add('hidden'); // Hide loading spinner
+            }
+        }
+
+        // Fetch and display data when the page loads
+        window.onload = fetchAndDisplayData;
+
+    </script>
 </body>
 </html>
